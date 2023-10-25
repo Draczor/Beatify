@@ -1,0 +1,2 @@
+# Beatify
+Music Streaming Platform
