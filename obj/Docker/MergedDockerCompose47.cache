@@ -1,0 +1,30 @@
+name: dockercompose7237653620745663979
+services:
+  apigateway:
+    build:
+      context: C:\Users\Lei\source\Beatify
+      dockerfile: ApiGateway/Dockerfile
+    container_name: apigateway
+    depends_on:
+      userservice:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: apigateway
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "5010"
+      protocol: tcp
+  userservice:
+    build:
+      context: C:\Users\Lei\source\Beatify
+      dockerfile: UserService/Dockerfile
+    image: userservice
+    networks:
+      default: null
+networks:
+  default:
+    name: dockercompose7237653620745663979_default

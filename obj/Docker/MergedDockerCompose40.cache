@@ -1,0 +1,60 @@
+name: dockercompose2780260478343493430
+services:
+  apigateway:
+    build:
+      context: C:\Users\Lei\source\Beatify Repos\Beatify
+      dockerfile: ApiGateway/Dockerfile
+    container_name: apigateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: apigateway
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "5010"
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: C:\Users\Lei\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Lei\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+  userservice:
+    build:
+      context: C:\Users\Lei\source\Beatify Repos\Beatify
+      dockerfile: UserService/Dockerfile
+    container_name: userservice
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    expose:
+    - "80"
+    image: userservice
+    networks:
+      default: null
+    volumes:
+    - type: bind
+      source: C:\Users\Lei\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Lei\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose2780260478343493430_default

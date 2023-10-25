@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  apigateway:
+    container_name: apigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - userservice
+    ports:
+      - "5010:80"
+
