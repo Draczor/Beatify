@@ -13,8 +13,8 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=
     volumes:
-      - C:\Users\Lei\source\Beatify Repos\Beatify\ApiGateway:/app
-      - C:\Users\Lei\source\Beatify Repos\Beatify:/src
+      - C:\Users\Lei\source\Beatify\ApiGateway:/app
+      - C:\Users\Lei\source\Beatify:/src
       - C:\Users\Lei\vsdbg\vs2017u5:/remote_debugger:rw
       - C:\Users\Lei\.nuget\packages\:/.nuget/packages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -28,7 +28,7 @@ services:
     entrypoint: tail -f /dev/null
     labels:
       com.microsoft.visualstudio.debuggee.program: "dotnet"
-      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages  \"/app/bin/Debug/net7.0/ApiGateway.dll\""
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages  \"\""
       com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
       com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
     tty: true
@@ -45,8 +45,8 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=
     volumes:
-      - C:\Users\Lei\source\Beatify Repos\Beatify\UserService:/app
-      - C:\Users\Lei\source\Beatify Repos\Beatify:/src
+      - C:\Users\Lei\source\Beatify\UserService:/app
+      - C:\Users\Lei\source\Beatify:/src
       - C:\Users\Lei\vsdbg\vs2017u5:/remote_debugger:rw
       - C:\Users\Lei\.nuget\packages\:/.nuget/packages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -60,7 +60,7 @@ services:
     entrypoint: tail -f /dev/null
     labels:
       com.microsoft.visualstudio.debuggee.program: "dotnet"
-      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages  \"/app/bin/Debug/net7.0/UserService.dll\""
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /.nuget/packages  \"\""
       com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
       com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
     tty: true

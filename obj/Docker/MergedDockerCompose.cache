@@ -1,66 +1,47 @@
-name: dockercompose2780260478343493430
+name: dockercompose7237653620745663979
 services:
   apigateway:
     build:
-      context: C:\Users\Lei\source\Beatify Repos\Beatify
+      context: C:\Users\Lei\source\Beatify
       dockerfile: ApiGateway/Dockerfile
+    container_name: apigateway
+    depends_on:
+      userservice:
+        condition: service_started
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443;http://+:80
     image: apigateway
     networks:
       default: null
     ports:
     - mode: ingress
       target: 80
-      published: "8010"
+      published: "5010"
       protocol: tcp
-    - mode: ingress
-      target: 443
-      protocol: tcp
-    volumes:
-    - type: bind
-      source: C:\Users\Lei\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\Lei\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-  userservice:
-    build:
-      context: C:\Users\Lei\source\Beatify Repos\Beatify
-      dockerfile: UserService/Dockerfile
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443;http://+:80
-    image: userservice
+  rabbitmq:
+    image: masstransit/rabbitmq:latest
     networks:
       default: null
     ports:
     - mode: ingress
-      target: 80
+      target: 5672
+      published: "5672"
       protocol: tcp
     - mode: ingress
-      target: 443
+      target: 15672
+      published: "15672"
       protocol: tcp
-    volumes:
-    - type: bind
-      source: C:\Users\Lei\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\Lei\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
+    - mode: ingress
+      target: 15692
+      published: "15692"
+      protocol: tcp
+  userservice:
+    build:
+      context: C:\Users\Lei\source\Beatify
+      dockerfile: UserService/Dockerfile
+    image: userservice
+    networks:
+      default: null
 networks:
   default:
-    name: dockercompose2780260478343493430_default
+    name: dockercompose7237653620745663979_default

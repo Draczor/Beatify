@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MassTransit.Transports;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.DbContexts;
 using UserService.Models;
+using UserService.Producer;
 using UserService.Repositories.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,10 +15,12 @@ namespace UserService.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
+        private readonly IMessageProducer _messagePublisher;
 
-        public UserController(UserContext context)
+        public UserController(UserContext context, IMessageProducer messagePublisher)
         {
             _context = context;
+            _messagePublisher = messagePublisher;
         }
 
         // GET: api/<UserController>
@@ -55,9 +59,12 @@ namespace UserService.Controllers
                 return BadRequest();
             }
 
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtRoute("GetUser", new { id = user.Id }, user);
+            _messagePublisher.SendMessage(user);
+
+            return Ok(new { id = user.Id });
         }
 
         // PUT api/<UserController>/5
@@ -79,7 +86,7 @@ namespace UserService.Controllers
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(user);
         }
 
         // DELETE api/<UserController>/5
