@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 7.0.100
 
     - name: Restore dependencies
-      run: dotnet restore C:/Users/Lei/source/Beatify/Beatify.sln
+      run: dotnet restore /home/runner/work/Beatify/Beatify.sln
 
     - name: Build
       run: dotnet build --configuration Release
