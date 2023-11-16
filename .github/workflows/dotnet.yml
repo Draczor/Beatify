@@ -1,4 +1,4 @@
-name: .NET
+name: .NET 7 CI
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 7.0.100
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore C:/Users/Lei/source/Beatify/Beatify.sln
 
     - name: Build
       run: dotnet build --configuration Release
