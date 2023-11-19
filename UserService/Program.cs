@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using UserService.Consumers;
 using UserService.Models;
+using UserService.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,12 +23,13 @@ builder.Services.AddDbContext<UserContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserServiceConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
 builder.Services.AddMassTransit(options =>
 {
     options.UsingRabbitMq((registrationContext, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMQ://localhost"] ?? "rabbitmq-1", "/", h =>
+        cfg.Host(builder.Configuration["RabbitMq:localhost"] ?? "beatify-rabbitmq-1", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
@@ -38,10 +40,12 @@ builder.Services.AddMassTransit(options =>
         cfg.ReceiveEndpoint("users", e =>
         {
             e.Consumer<CommandMessageConsumer>();
-            //e.Consumer<UserCreatedEventConsumer>();
+            //e.PrefetchCount = 16;
+            //e.UseMessageRetry(r => r.Interval(2, 100));
+            //e.ConfigureConsumer<CommandMessageConsumer>(registrationContext);
         });
     });
-    
+
 });
 
 var app = builder.Build();

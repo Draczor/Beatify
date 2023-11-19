@@ -15,12 +15,12 @@ namespace UserService.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
-        private readonly IMessageProducer _messagePublisher;
+        private readonly IRabbitMQProducer _rabbitMQProducer;
 
-        public UserController(UserContext context, IMessageProducer messagePublisher)
+        public UserController(UserContext context, IRabbitMQProducer rabbitMQProducer)
         {
             _context = context;
-            _messagePublisher = messagePublisher;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         // GET: api/<UserController>
@@ -28,6 +28,7 @@ namespace UserService.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
+            _rabbitMQProducer.SendMessage(users);
             return Ok(users);
         }
 
@@ -62,7 +63,7 @@ namespace UserService.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            _messagePublisher.SendMessage(user);
+            _rabbitMQProducer.SendMessage(user);
 
             return Ok(new { id = user.Id });
         }

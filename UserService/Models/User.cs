@@ -8,8 +8,8 @@ namespace UserService.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
-        public UserCreatedEvent ToUserCreatedEvent()
+        //public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+        /*public UserCreatedEvent ToUserCreatedEvent()
         {
             return new UserCreatedEvent
             {
@@ -17,13 +17,13 @@ namespace UserService.Models
                 Name = Name,
                 CreatedAt = CreatedAt
             };
-        }
+        }*/
     }
 
-    public record UserCreatedEvent
+    /*public record UserCreatedEvent
     {
         public int Id { get; init; }
         public string Name { get; init; } = string.Empty;
         public DateTime CreatedAt { get; init; }
-    }
+    }*/
 }

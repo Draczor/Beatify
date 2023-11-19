@@ -1,16 +1,16 @@
-﻿using MassTransit;
+﻿/*using MassTransit;
 using UserService.Shared;
 
 namespace UserService.Consumers
 {
-    /*public interface IConsumer<in TMessage> : IConsumer
+    public interface IConsumer<in TMessage> : IConsumer
     where TMessage : class
     {
         Task Consume(ConsumeContext<TMessage> context);
     }
-    public interface IConsumer { }*/
+    public interface IConsumer { }
 
-    /*public class CommandMessageConsumer : IConsumer<CommandMessage>
+    public class CommandMessageConsumer : IConsumer<CommandMessage>
     {
         public async Task Consume(ConsumeContext<CommandMessage> context)
         {
@@ -19,5 +19,6 @@ namespace UserService.Consumers
             // Do something useful with the message
 
         }
-    }*/
+    }
 }
+*/
