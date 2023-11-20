@@ -25,25 +25,39 @@ builder.Services.AddDbContext<UserContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
+/*builder.Services.AddMassTransit(busConfigurator =>
+{
+    busConfigurator.SetKebabCaseEndpointNameFormatter();
+    busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+    {
+        busFactoryConfigurator.Host(builder.Configuration["localhost"] ?? "beatify-rabbitmq-1", "/", hostConfigurator => 
+        {
+            hostConfigurator.Username("guest");
+            hostConfigurator.Password("guest");
+        });
+    });
+});*/
+
 builder.Services.AddMassTransit(options =>
 {
     options.UsingRabbitMq((registrationContext, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMq:localhost"] ?? "beatify-rabbitmq-1", "/", h =>
+        cfg.Host(builder.Configuration["localhost"] ?? "beatify-rabbitmq-1", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
         });
 
-        cfg.ConfigureEndpoints(registrationContext, new KebabCaseEndpointNameFormatter(true));
+        //cfg.ConfigureEndpoints(registrationContext, new KebabCaseEndpointNameFormatter(true));
 
-        cfg.ReceiveEndpoint("users", e =>
+        /*cfg.ReceiveEndpoint("users", e =>
         {
             e.Consumer<CommandMessageConsumer>();
+            //e.ConfigureConsumer<CommandMessageConsumer>(registrationContext);
             //e.PrefetchCount = 16;
             //e.UseMessageRetry(r => r.Interval(2, 100));
             //e.ConfigureConsumer<CommandMessageConsumer>(registrationContext);
-        });
+        });*/
     });
 
 });

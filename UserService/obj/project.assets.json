@@ -5056,19 +5056,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lei\\.nuget\\packages\\": {}
+    "C:\\Users\\lzhen\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lei\\source\\Beatify\\UserService\\UserService.csproj",
+      "projectUniqueName": "C:\\Users\\lzhen\\source\\Beatify\\UserService\\UserService.csproj",
       "projectName": "UserService",
-      "projectPath": "C:\\Users\\Lei\\source\\Beatify\\UserService\\UserService.csproj",
-      "packagesPath": "C:\\Users\\Lei\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lei\\source\\Beatify\\UserService\\obj\\",
+      "projectPath": "C:\\Users\\lzhen\\source\\Beatify\\UserService\\UserService.csproj",
+      "packagesPath": "C:\\Users\\lzhen\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lzhen\\source\\Beatify\\UserService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Lei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lzhen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

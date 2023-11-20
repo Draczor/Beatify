@@ -11,13 +11,13 @@ namespace UserService.Producer
         {
             var factory = new ConnectionFactory 
             { 
-                HostName = "localhost",
-                Port = 5672,
+                HostName = "beatify-rabbitmq-1"
+                /*Port = 5672,
                 UserName = "guest",
-                Password = "guest"
+                Password = "guest"*/
             };
 
-            IConnection tryConnection = null;
+            /*IConnection tryConnection = null;
 
             // Retry logic with a maximum number of attempts
             const int maxAttempts = 3;
@@ -32,7 +32,7 @@ namespace UserService.Producer
                     //var connection = factory.CreateConnection();
                     using var channel = tryConnection.CreateModel();
 
-                    channel.QueueDeclare("users", exclusive: false);
+                    //channel.QueueDeclare("users");
 
                     var json = JsonConvert.SerializeObject(message);
                     var body = Encoding.UTF8.GetBytes(json);
@@ -54,16 +54,16 @@ namespace UserService.Producer
             {
                 // Handle the case where the maximum number of attempts is reached
                 Console.WriteLine("Failed to establish connection after multiple attempts.");
-            }
+            }*/
 
-            /*var connection = factory.CreateConnection();
+            var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            channel.QueueDeclare("users", exclusive: false);
+            //channel.QueueDeclare("users", exclusive: false);
 
             var json = JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: "users", body: body);*/
+            channel.BasicPublish(exchange: "", routingKey: "users", body: body);
         }
     }
 }

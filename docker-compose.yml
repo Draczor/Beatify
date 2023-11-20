@@ -13,3 +13,9 @@ services:
       context: .
       dockerfile: UserService/Dockerfile
 
+  playlistservice:
+    image: ${DOCKER_REGISTRY-}playlistservice
+    build:
+      context: .
+      dockerfile: PlaylistService/Dockerfile
+

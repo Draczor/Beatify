@@ -1,4 +1,5 @@
-﻿using MassTransit.Transports;
+﻿using MassTransit;
+using MassTransit.Transports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.DbContexts;
@@ -15,12 +16,14 @@ namespace UserService.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
-        private readonly IRabbitMQProducer _rabbitMQProducer;
+        //private readonly IRabbitMQProducer _rabbitMQProducer;
+        //public readonly IPublishEndpoint publishEndpoint;
+        private readonly ISendEndpointProvider sendEndpointProvider;
 
-        public UserController(UserContext context, IRabbitMQProducer rabbitMQProducer)
+        public UserController(UserContext context, ISendEndpointProvider sendEndpointProvider)
         {
             _context = context;
-            _rabbitMQProducer = rabbitMQProducer;
+            this.sendEndpointProvider = sendEndpointProvider;
         }
 
         // GET: api/<UserController>
@@ -28,7 +31,17 @@ namespace UserService.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
-            _rabbitMQProducer.SendMessage(users);
+            
+            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:users"));
+
+            await endpoint.Send<User>(new
+            {
+                Id = 35,
+                Name = "Message test",
+                Email = "Message@rabbitmq.nl",
+                Password = "pwdformessage"
+            });
+
             return Ok(users);
         }
 
@@ -63,7 +76,7 @@ namespace UserService.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            _rabbitMQProducer.SendMessage(user);
+            //_rabbitMQProducer.SendMessage(user);
 
             return Ok(new { id = user.Id });
         }
