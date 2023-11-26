@@ -1,7 +1,10 @@
-﻿namespace UserService.Producer
+﻿using UserService.Models;
+
+namespace UserService.Producer
 {
     public interface IRabbitMQProducer
     {
-        public void SendMessage<T>(T message);
+        public Task SendUserCreated(User user);
+        public Task SendMessageCreated(MyMessage message);
     }
 }

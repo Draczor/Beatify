@@ -14,27 +14,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(options =>
 {
     options.AddConsumer<UserCreatedConsumer>();
+    options.AddConsumer<MyMessageConsumer>();
     options.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host(builder.Configuration["localhost"] ?? "beatify-rabbitmq-1", "/", h =>
+        cfg.Host("beatify-rabbitmq-1", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
         });
 
-        //cfg.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter(true));
         cfg.ConfigureEndpoints(context);
-
-        /*cfg.ReceiveEndpoint("users", e =>
+        /*cfg.ReceiveEndpoint("UserCreated", e =>
         {
-            e.Consumer<UserCreatedConsumer>();
-            //e.ConfigureConsumer<CommandMessageConsumer>(registrationContext);
-            //e.PrefetchCount = 16;
-            //e.UseMessageRetry(r => r.Interval(2, 100));
-            //e.ConfigureConsumer<CommandMessageConsumer>(registrationContext);
+            e.ConfigureConsumer<UserCreatedConsumer>(context);
         });*/
     });
-
+    options.AddConsumers(typeof(Program).Assembly);
 });
 
 var app = builder.Build();

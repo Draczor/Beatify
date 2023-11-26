@@ -1,69 +1,30 @@
-﻿using Microsoft.AspNetCore.Connections;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Connections;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
+using UserService.Models;
 
 namespace UserService.Producer
 {
     public class RabbitMQProducer : IRabbitMQProducer
     {
-        public void SendMessage<T>(T message)
+        private readonly IBus _bus;
+
+        public RabbitMQProducer(IBus bus)
         {
-            var factory = new ConnectionFactory 
-            { 
-                HostName = "beatify-rabbitmq-1"
-                /*Port = 5672,
-                UserName = "guest",
-                Password = "guest"*/
-            };
+            _bus = bus;
+        }
 
-            /*IConnection tryConnection = null;
+        public async Task SendUserCreated(User user)
+        {
+            await _bus.Publish(user);
+        }
 
-            // Retry logic with a maximum number of attempts
-            const int maxAttempts = 3;
-            int attempts = 0;
-
-            while (attempts < maxAttempts)
-            {
-                try
-                {
-                    tryConnection = factory.CreateConnection();
-                    // Connection successful, break out of the loop
-                    //var connection = factory.CreateConnection();
-                    using var channel = tryConnection.CreateModel();
-
-                    //channel.QueueDeclare("users");
-
-                    var json = JsonConvert.SerializeObject(message);
-                    var body = Encoding.UTF8.GetBytes(json);
-                    channel.BasicPublish(exchange: "", routingKey: "users", body: body);
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception or take other appropriate action
-                    Console.WriteLine($"Connection attempt failed: {ex.Message}");
-
-                    // Increment the attempts and wait before retrying
-                    attempts++;
-                    Thread.Sleep(1000); // Wait for 1 second before retrying
-                }
-            }
-
-            if (tryConnection == null)
-            {
-                // Handle the case where the maximum number of attempts is reached
-                Console.WriteLine("Failed to establish connection after multiple attempts.");
-            }*/
-
-            var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-
-            //channel.QueueDeclare("users", exclusive: false);
-
-            var json = JsonConvert.SerializeObject(message);
-            var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: "users", body: body);
+        public async Task SendMessageCreated(MyMessage message)
+        {
+            Console.WriteLine(message.Content);
+            await _bus.Publish(message);
         }
     }
 }

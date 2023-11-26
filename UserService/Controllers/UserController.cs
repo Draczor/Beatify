@@ -16,14 +16,14 @@ namespace UserService.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
-        //private readonly IRabbitMQProducer _rabbitMQProducer;
-        //public readonly IPublishEndpoint publishEndpoint;
-        private readonly ISendEndpointProvider sendEndpointProvider;
+        private readonly IRabbitMQProducer _rabbitMQProducer;
+        public readonly IPublishEndpoint _publishEndpoint;
+        //private readonly ISendEndpointProvider sendEndpointProvider;
 
-        public UserController(UserContext context, ISendEndpointProvider sendEndpointProvider)
+        public UserController(UserContext context, IRabbitMQProducer rabbitMQProducer)
         {
             _context = context;
-            this.sendEndpointProvider = sendEndpointProvider;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         // GET: api/<UserController>
@@ -31,16 +31,28 @@ namespace UserService.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
-            
-            var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:users"));
 
-            await endpoint.Send<User>(new
+            /*  var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:users"));
+
+              await endpoint.Send<User>(new
+              {
+                  Id = 35,
+                  Name = "Message test",
+                  Email = "Message@rabbitmq.nl",
+                  Password = "pwdformessage"
+              });*/
+            /*var message = new MyMessage { Content = "Hello, Microservices!" };
+
+            await _bus.Send(message);*/
+
+            await _rabbitMQProducer.SendMessageCreated(new MyMessage
             {
-                Id = 35,
-                Name = "Message test",
-                Email = "Message@rabbitmq.nl",
-                Password = "pwdformessage"
+                Content = "Hello, Microservices!"
             });
+            /*await _publishEndpoint.Publish<MyMessage>(new
+            {
+                Content = "Hello, Microservices!"
+            });*/
 
             return Ok(users);
         }

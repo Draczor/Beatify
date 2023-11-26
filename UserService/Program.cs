@@ -40,15 +40,16 @@ builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
 builder.Services.AddMassTransit(options =>
 {
-    options.UsingRabbitMq((registrationContext, cfg) =>
+    options.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host(builder.Configuration["localhost"] ?? "beatify-rabbitmq-1", "/", h =>
+        cfg.Host("beatify-rabbitmq-1", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
         });
 
-        //cfg.ConfigureEndpoints(registrationContext, new KebabCaseEndpointNameFormatter(true));
+        //cfg.ConfigureEndpoints(context);
+        cfg.ConfigureEndpoints(context);
 
         /*cfg.ReceiveEndpoint("users", e =>
         {
