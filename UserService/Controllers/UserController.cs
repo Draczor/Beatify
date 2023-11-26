@@ -17,13 +17,13 @@ namespace UserService.Controllers
     {
         private readonly UserContext _context;
         private readonly IRabbitMQProducer _rabbitMQProducer;
-        public readonly IPublishEndpoint _publishEndpoint;
-        //private readonly ISendEndpointProvider sendEndpointProvider;
+        //public readonly IPublishEndpoint _publishEndpoint;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
 
-        public UserController(UserContext context, IRabbitMQProducer rabbitMQProducer)
+        public UserController(UserContext context, ISendEndpointProvider sendEndpointProvider)
         {
             _context = context;
-            _rabbitMQProducer = rabbitMQProducer;
+            _sendEndpointProvider = sendEndpointProvider;
         }
 
         // GET: api/<UserController>
@@ -32,23 +32,21 @@ namespace UserService.Controllers
         {
             var users = await _context.Users.ToListAsync();
 
-            /*  var endpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:users"));
+            var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:UserCreated"));
 
-              await endpoint.Send<User>(new
-              {
-                  Id = 35,
-                  Name = "Message test",
-                  Email = "Message@rabbitmq.nl",
-                  Password = "pwdformessage"
-              });*/
+            foreach (var user in users)
+            {
+                await endpoint.Send<User>(user);
+            }
+
             /*var message = new MyMessage { Content = "Hello, Microservices!" };
 
             await _bus.Send(message);*/
 
-            await _rabbitMQProducer.SendMessageCreated(new MyMessage
+            /*await _rabbitMQProducer.SendMessageCreated(new MyMessage
             {
                 Content = "Hello, Microservices!"
-            });
+            });*/
             /*await _publishEndpoint.Publish<MyMessage>(new
             {
                 Content = "Hello, Microservices!"
@@ -67,6 +65,9 @@ namespace UserService.Controllers
             }
 
             var user = await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+
+            var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:UserCreated"));
+            await endpoint.Send<User>(user);
 
             if (user == null)
             {

@@ -20,11 +20,5 @@ namespace UserService.Producer
         {
             await _bus.Publish(user);
         }
-
-        public async Task SendMessageCreated(MyMessage message)
-        {
-            Console.WriteLine(message.Content);
-            await _bus.Publish(message);
-        }
     }
 }

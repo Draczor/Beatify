@@ -14,7 +14,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(options =>
 {
     options.AddConsumer<UserCreatedConsumer>();
-    options.AddConsumer<MyMessageConsumer>();
     options.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("beatify-rabbitmq-1", "/", h =>
@@ -24,9 +23,9 @@ builder.Services.AddMassTransit(options =>
         });
 
         cfg.ConfigureEndpoints(context);
-        /*cfg.ReceiveEndpoint("UserCreated", e =>
+        /*cfg.ReceiveEndpoint("MyMessage", e =>
         {
-            e.ConfigureConsumer<UserCreatedConsumer>(context);
+            e.ConfigureConsumer<MyMessageConsumer>(context);
         });*/
     });
     options.AddConsumers(typeof(Program).Assembly);

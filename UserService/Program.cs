@@ -6,7 +6,6 @@ using UserService.Repositories.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
-using UserService.Consumers;
 using UserService.Models;
 using UserService.Producer;
 

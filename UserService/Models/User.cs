@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-
-namespace UserService.Models
+﻿namespace UserService.Models
 {
     public class User
     {
