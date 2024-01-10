@@ -25,6 +25,15 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image: leizheng0312/apigateway
+            dockerfile: ./ApiGateway/Dockerfile
+          - image: leizheng0312/userservice
+            dockerfile: ./UserService/Dockerfile
+          - image: leizheng0312/playlistservice
+            dockerfile: ./PlaylistService/Dockerfile
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -38,10 +47,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ matrix.image }}
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./ApiGateway/Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
-          tags: leizheng0312/apigateway:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }
