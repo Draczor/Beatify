@@ -12,11 +12,7 @@ jobs:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - List Manifests Directory Contents
-        run: ls -R manifests
-      - name: Debug - Print Working Directory
-        run: pwd
-      - name: Debug - Print File Path
-        run: echo "File path:$(pwd)/manifests/userservice-deployment.yaml"
+      - name: Debug - List Entire Repository Contents
+        run: ls -R
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f manifests/userservice-deployment.yaml
+        run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
