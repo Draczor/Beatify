@@ -11,11 +11,6 @@ jobs:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - List Entire Repository Contents
-        run: ls -R
-      - name: Debug - Print Working Directory
-        run: pwd
-      - name: Debug - Print File Path
-        run: echo "File path:$(pwd)/Beatify/manifests/userservice-deployment.yaml"
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
+        run: kubectl apply -f manifests/userservice-deployment.yaml
+        working-directory: /home/runner/work/Beatify/Beatify
