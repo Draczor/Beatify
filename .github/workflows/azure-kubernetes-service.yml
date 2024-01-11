@@ -10,10 +10,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug - CD
+        run: cd ../
       - name: Debug - List Entire Repository Contents
         run: ls -R
       - name: Debug - Print Working Directory
         run: pwd
       - name: Deploy to AKS
-        working-directory: Beatify
         run: kubectl apply -f manifests/userservice-deployment.yaml
