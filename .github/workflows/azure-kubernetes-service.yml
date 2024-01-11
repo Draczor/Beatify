@@ -6,22 +6,19 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-      id-token: write
-      contents: read
 jobs:
             
   push_to_registry:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Azure login
-        uses: azure/login@v1
+      - name: Deploy to AKS
+        uses: azure/aks-set-context@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          cluster-name: Beatify-cluster
+          resource-group: Beatify
+          kubectl-version: latest
+  
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f Beatify-cluster/manifests/userservice
+        run: kubectl apply -f path/to/your/project-root/manifests/userservice
