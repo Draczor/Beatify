@@ -13,10 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debug - List Directory Contents
-        run: ls -R manifests
-
-      - name: Debug - Verify Full Path
-        run: find . -name "userservice-deployment.yaml"
-
+        run: ls -R
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f manifests/userservice-deployment.yaml
+        run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
