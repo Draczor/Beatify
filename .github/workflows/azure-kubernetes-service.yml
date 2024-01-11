@@ -1,0 +1,16 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+            
+  push_to_registry:
+    name: Deploy to AKS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply Kubernetes manifests
+        run: kubectl apply -f path/to/your/project-root/manifests/userservice
