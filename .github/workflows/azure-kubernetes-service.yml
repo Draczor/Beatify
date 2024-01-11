@@ -7,12 +7,15 @@ on:
     branches: [ "main" ]
 
 jobs:
-            
   push_to_registry:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
       - name: Debug - List Entire Repository Contents
         run: ls -R
+      - name: Debug - Print Working Directory
+        run: pwd
+      - name: Debug - Print File Path
+        run: echo "File path:$(pwd)/Beatify/manifests/userservice-deployment.yaml"
       - name: Apply Kubernetes manifests
         run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
