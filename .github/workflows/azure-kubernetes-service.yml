@@ -15,4 +15,4 @@ jobs:
       - name: Debug - List Directory Contents
         run: ls -R
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
+        run: kubectl apply -f manifests/userservice-deployment.yaml
