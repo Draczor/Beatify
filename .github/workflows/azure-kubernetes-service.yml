@@ -15,6 +15,8 @@ jobs:
       - name: Debug - List Entire Repository Contents
         run: ls -R
       - name: Debug - Print Working Directory
+        working-directory: manifests
         run: pwd
       - name: Deploy to AKS
-        run: kubectl apply -f manifests/userservice-deployment.yaml
+        working-directory: manifests
+        run: kubectl apply -f userservice-deployment.yaml
