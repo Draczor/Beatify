@@ -1,21 +1,62 @@
 version: '3.4'
 
 services:
+  rabbitmq:
+    image: masstransit/rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
   apigateway:
+    container_name: apigateway
     image: ${DOCKER_REGISTRY-}apigateway
     build:
       context: .
       dockerfile: ApiGateway/Dockerfile
+    ports: 
+      - "5010:80"
+    networks:
+      - backend
+
+  user-db:
+    image: mysql:latest
+    container_name: user-db
+    environment:
+      - MYSQL_DATABASE=${USERDB}
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+    expose:
+      - '3306'
+    networks:
+      - backend
 
   userservice:
     image: ${DOCKER_REGISTRY-}userservice
     build:
       context: .
       dockerfile: UserService/Dockerfile
+    networks:
+      - backend
+
+  playlist-db:
+    image: mysql:latest
+    container_name: playlist-db
+    environment:
+      - MYSQL_DATABASE=${PLAYLISTDB}
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+    expose:
+      - '3306'
+    networks:
+      - backend
 
   playlistservice:
     image: ${DOCKER_REGISTRY-}playlistservice
     build:
       context: .
       dockerfile: PlaylistService/Dockerfile
+    networks:
+      - backend
 
+networks:
+  backend:

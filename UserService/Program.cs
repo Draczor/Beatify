@@ -18,11 +18,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<UserContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("UserServiceConnection")));
+/*builder.Services.AddDbContext<UserContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserServiceConnection")));*/
+var connectionstring = builder.Configuration.GetConnectionString("UserServiceConnection");
+builder.Services.AddDbContext<UserContext>(options => {
+    options.UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring));
+});
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
+
 
 /*builder.Services.AddMassTransit(busConfigurator =>
 {
@@ -41,13 +46,18 @@ builder.Services.AddMassTransit(options =>
 {
     options.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("beatify-rabbitmq-1", "/", h =>
+       /* cfg.Host("beatify-rabbitmq-1", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });*/
+
+        cfg.Host(builder.Configuration["beatify-rabbitmq-1"] ?? "rabbitmq-service", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
         });
 
-        //cfg.ConfigureEndpoints(context);
         cfg.ConfigureEndpoints(context);
 
         /*cfg.ReceiveEndpoint("users", e =>
@@ -63,6 +73,12 @@ builder.Services.AddMassTransit(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<UserContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

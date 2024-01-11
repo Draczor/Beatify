@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: userservice
+  name: userservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: userservice
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/beatify-default: "true"
+        io.kompose.service: userservice
+    spec:
+      containers:
+        - image: leizheng0312/userservice:1.7
+          name: userservice
+          resources: {}
+      restartPolicy: Always
+status: {}

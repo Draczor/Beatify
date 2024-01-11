@@ -39,21 +39,9 @@ namespace UserService.Controllers
                 await endpoint.Send<User>(user);
             }
 
-            /*var message = new MyMessage { Content = "Hello, Microservices!" };
-
-            await _bus.Send(message);*/
-
-            /*await _rabbitMQProducer.SendMessageCreated(new MyMessage
-            {
-                Content = "Hello, Microservices!"
-            });*/
-            /*await _publishEndpoint.Publish<MyMessage>(new
-            {
-                Content = "Hello, Microservices!"
-            });*/
-
             return Ok(users);
         }
+
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
@@ -66,11 +54,12 @@ namespace UserService.Controllers
 
             var user = await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
 
-            var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:UserCreated"));
-            await endpoint.Send<User>(user);
+            /*var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:UserCreated"));
+            await endpoint.Send<User>(user);*/
 
             if (user == null)
             {
+                
                 return NotFound();
             }
 
@@ -90,6 +79,18 @@ namespace UserService.Controllers
             await _context.SaveChangesAsync();
 
             //_rabbitMQProducer.SendMessage(user);
+            /*var message = new MyMessage { Content = "Hello, Microservices!" };
+
+            await _bus.Send(message);*/
+
+            /*await _rabbitMQProducer.SendMessageCreated(new MyMessage
+            {
+                Content = "Hello, Microservices!"
+            });*/
+            /*await _publishEndpoint.Publish<MyMessage>(new
+            {
+                Content = "Hello, Microservices!"
+            });*/
 
             return Ok(new { id = user.Id });
         }

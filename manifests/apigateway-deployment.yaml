@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway
+  labels:
+    io.kompose.service: apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: apigateway
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/beatify-default: "true"
+        io.kompose.service: apigateway
+    spec:
+      containers:
+        - image: leizheng0312/apigateway:v1.0
+          name: apigateway
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

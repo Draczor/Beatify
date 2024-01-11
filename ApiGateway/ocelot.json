@@ -7,11 +7,11 @@
       "UpstreamPathTemplate": "/gateway/user",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/User",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
-          "Port": 5002
+          "Port": 80
         }
       ]
     },
@@ -19,11 +19,11 @@
       "UpstreamPathTemplate": "/gateway/user/{id}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/User/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
-          "Port": 5002
+          "Port": 80
         }
       ]
     },
@@ -31,11 +31,11 @@
       "UpstreamPathTemplate": "/gateway/user",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamPathTemplate": "/api/User",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
-          "Port": 5002
+          "Port": 80
         }
       ]
     }

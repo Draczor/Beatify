@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: playlist-db
+  name: playlist-db
+spec:
+  ports:
+    - name: "mysql-tcp"
+      port: 3306
+      targetPort: 3306
+  selector:
+    io.kompose.service: playlist-db
+status:
+  loadBalancer: {}

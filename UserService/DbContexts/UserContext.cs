@@ -10,6 +10,8 @@ namespace UserService.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
