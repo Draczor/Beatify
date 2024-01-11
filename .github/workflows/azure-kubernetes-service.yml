@@ -10,10 +10,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Deploy to AKS
-      working-directory: Beatify
-      run: |
-        kubectl apply -f manifests/userservice-deployment.yaml
+      - name: Debug - List Entire Repository Contents
+        run: ls -R
+      - name: Debug - Print Working Directory
+        run: pwd
+      - name: Deploy to AKS
+        working-directory: Beatify
+        run: kubectl apply -f manifests/userservice-deployment.yaml
