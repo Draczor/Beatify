@@ -12,5 +12,9 @@ jobs:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
+      - name: Debug Info
+        run: |
+          pwd
+          ls -R Beatify
       - name: Apply Kubernetes manifests
         run: kubectl apply -f Beatify/manifests/userservice-deployment.yaml
