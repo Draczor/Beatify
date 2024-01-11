@@ -7,12 +7,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  push_to_registry:
-    name: Deploy to AKS
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Apply Kubernetes manifests
-        run: |
-          cd Beatify
-          kubectl apply -f manifests/userservice-deployment.yaml
-        working-directory: /home/runner/work/Beatify
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Kubernetes
+      uses: azure/aks-set-context@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        cluster-name: 'Beatify-cluster'
+        resource-group: 'Beatify'
+        namespace: 'default'
+
+    - name: Deploy to AKS
+      working-directory: Beatify
+      run: |
+        kubectl apply -f manifests/userservice-deployment.yaml
