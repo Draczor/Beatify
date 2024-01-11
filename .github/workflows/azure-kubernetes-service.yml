@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Apply Kubernetes manifests
-        run: kubectl apply -f path/to/your/project-root/manifests/userservice
+        run: kubectl apply -f /manifests/userservice-deployment.yaml
