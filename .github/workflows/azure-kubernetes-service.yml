@@ -12,13 +12,5 @@ jobs:
     name: Deploy to AKS
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to AKS
-        uses: azure/aks-set-context@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          cluster-name: Beatify-cluster
-          resource-group: Beatify
-          kubectl-version: latest
-  
       - name: Apply Kubernetes manifests
         run: kubectl apply -f path/to/your/project-root/manifests/userservice
