@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: UpdateAKS
+  labels:
+    app: UpdateAKS
+  namespace: namespace-workflow-1705319902911
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: UpdateAKS
+  template:
+    metadata:
+      labels:
+        app: UpdateAKS
+    spec:
+      containers:
+        - name: UpdateAKS
+          image: beatifyregistry.azurecr.io/image-workflow-1705319902911:latest
+          ports:
+            - containerPort: 5000
