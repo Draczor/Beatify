@@ -16,6 +16,7 @@ builder.Services.AddMassTransit(options =>
     options.AddConsumer<UserCreatedConsumer>();
     options.UsingRabbitMq((context, cfg) =>
     {
+        //cfg.Host(builder.Configuration["beatify-rabbitmq-1"] ?? "beatify-rabbitmq-1", "/", h =>
         cfg.Host(builder.Configuration["beatify-rabbitmq-1"] ?? "rabbitmq-service", "/", h =>
         {
             h.Username("guest");

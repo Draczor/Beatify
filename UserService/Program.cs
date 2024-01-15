@@ -46,12 +46,13 @@ builder.Services.AddMassTransit(options =>
 {
     options.UsingRabbitMq((context, cfg) =>
     {
-       /* cfg.Host("beatify-rabbitmq-1", "/", h =>
-        {
-            h.Username("guest");
-            h.Password("guest");
-        });*/
+        /* cfg.Host("beatify-rabbitmq-1", "/", h =>
+         {
+             h.Username("guest");
+             h.Password("guest");
+         });*/
 
+        //cfg.Host(builder.Configuration["beatify-rabbitmq-1"] ?? "beatify-rabbitmq-1", "/", h =>
         cfg.Host(builder.Configuration["beatify-rabbitmq-1"] ?? "rabbitmq-service", "/", h =>
         {
             h.Username("guest");
@@ -74,6 +75,7 @@ builder.Services.AddMassTransit(options =>
 
 var app = builder.Build();
 
+// This should be uncommented when in production but commented when testing locally
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<UserContext>();

@@ -17,7 +17,7 @@ spec:
         io.kompose.service: playlistservice
     spec:
       containers:
-        - image: leizheng0312/playlistservice:v1.0
+        - image: leizheng0312/playlistservice:latest
           name: playlistservice
           resources: {}
       restartPolicy: Always

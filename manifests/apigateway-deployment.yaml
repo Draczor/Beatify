@@ -17,7 +17,7 @@ spec:
         io.kompose.service: apigateway
     spec:
       containers:
-        - image: leizheng0312/apigateway:v1.0
+        - image: leizheng0312/apigateway:latest
           name: apigateway
           ports:
             - containerPort: 80
