@@ -79,7 +79,7 @@ export const options = {
 
 export default function () {
   // Here, we set the endpoint to test.
-  const response = http.get('http://localhost:5010/gateway/user');
+  const response = http.get('http://localhost:3000/gateway/user');
 
   // An assertion
   check(response, {

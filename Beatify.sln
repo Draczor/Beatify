@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SongService", "SongService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistService", "PlaylistService\PlaylistService.csproj", "{81F6FFC1-F398-4855-9BD4-C371B05A7858}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFrontend", "TestFrontend\TestFrontend.csproj", "{5D82572E-E68B-4FC1-8CC7-D0C9F0A1C4C9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{E36E8857-AB01-4EF7-BA86-4EC7E411D369}"
 EndProject
 Global
@@ -43,10 +41,6 @@ Global
 		{81F6FFC1-F398-4855-9BD4-C371B05A7858}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F6FFC1-F398-4855-9BD4-C371B05A7858}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81F6FFC1-F398-4855-9BD4-C371B05A7858}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D82572E-E68B-4FC1-8CC7-D0C9F0A1C4C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D82572E-E68B-4FC1-8CC7-D0C9F0A1C4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D82572E-E68B-4FC1-8CC7-D0C9F0A1C4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D82572E-E68B-4FC1-8CC7-D0C9F0A1C4C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E36E8857-AB01-4EF7-BA86-4EC7E411D369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E36E8857-AB01-4EF7-BA86-4EC7E411D369}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E36E8857-AB01-4EF7-BA86-4EC7E411D369}.Release|Any CPU.ActiveCfg = Release|Any CPU
