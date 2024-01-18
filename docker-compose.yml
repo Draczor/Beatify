@@ -58,12 +58,13 @@ services:
     networks:
       - backend
 
-  testfrontend:
-    image: ${DOCKER_REGISTRY-}testfrontend
+  frontend:
+    image: ${DOCKER_REGISTRY-}frontend
     build:
       context: .
-      dockerfile: TestFrontend/Dockerfile
+      dockerfile: Frontend/Dockerfile
 
 networks:
   backend:
+
 

@@ -6,7 +6,8 @@
       "serviceActions": {
         "apigateway": "StartDebugging",
         "userservice": "StartDebugging",
-        "testfrontend": "StartDebugging"
+        "testfrontend": "StartDebugging",
+        "frontend": "StartDebugging"
       }
     }
   }

@@ -11,7 +11,7 @@ services:
     ports:
       - "5010:80"
  
-  testfrontend:
+  frontend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
